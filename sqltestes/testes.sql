@@ -5,6 +5,7 @@ CREATE TABLE Herois (
     sexo VARCHAR(10) NOT NULL,
     altura FLOAT,
     local_nascimento VARCHAR(100) NOT NULL,
+    data_nascimento DATE NOT NULL,
     peso FLOAT,
     popularidade INT NOT NULL CHECK (popularidade BETWEEN 0 AND 100),
     forca INT NOT NULL CHECK (forca BETWEEN 0 AND 100),
