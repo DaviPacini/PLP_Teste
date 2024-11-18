@@ -23,3 +23,32 @@ VALUES
 ('Controle de eletricidade', 'Poder de gerar e controlar eletricidade, podendo usá-la como uma arma ou para manipular dispositivos eletrônicos.'),
 ('Força telepática', 'Habilidade de ler mentes e comunicar-se telepaticamente com outras pessoas.'),
 ('Manipulação de realidade', 'Poder de alterar a realidade e os eventos que ocorrem ao redor do indivíduo, mudando as leis físicas e naturais.');
+
+INSERT INTO Crimes (nome_crime, severidade)
+VALUES
+('Assassinato', 10),
+('Roubo', 7),
+('Fraude', 6),
+('Sequestro', 9),
+('Corrupção', 8),
+('Tráfico de drogas', 9),
+('Agressão física', 6),
+('Estupro', 10),
+('Vandalismo', 5),
+('Extorsão', 8);
+('Hackerismo', 7),
+('Assédio sexual', 8),
+('Terrorismo', 10),
+('Tráfico de seres humanos', 10),
+('Falsificação de documentos', 6),
+('Lavagem de dinheiro', 9),
+('Espionagem', 8),
+('Concussão', 5),
+('Fraude fiscal', 7),
+('Roubos à mão armada', 9);
+('Urinar em local público', 3);
+('Pedofilia', 8);
+('11-09', 10);
+('Homofobia', 1);
+('Racismo', 7);
+('Trafico de animais', 5);
