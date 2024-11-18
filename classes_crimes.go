@@ -175,7 +175,7 @@ func ConsultaCrimesPorSeveridade(severidadeMinima int, severidadeMaxima int) ([]
 func ModificacaoHeroi(NomeHeroi string, NovoNomeHeroi string, NomeReal string, Sexo string, Altura float64, Local_nascimento string, Data_nascimento float64, Peso float64, Popularidade int, Forca int, Status string) error {
 	db := ConectaDB()
 	defer db.Close() // Garantir que o banco de dados seja fechado após o uso
-
+	// Query que atualiza o herói com "NomeHeroi"
 	query := `
 		UPDATE
 			Herois
