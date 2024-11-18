@@ -39,7 +39,7 @@ type Herois struct {
 }
 
 // Método para exibir as informações dos heróis
-func (h Herois) ExibeInfos() {
+func (h Herois) ExibeInfosGerais() {
 	db := ConectaDB()
 	defer db.Close() // Garantir que o banco de dados seja fechado após o uso
 
@@ -90,3 +90,49 @@ func (h Herois) ExibeInfos() {
 			heroi.Nome, heroi.NomeHeroi, heroi.Poder, heroi.Popularidade, heroi.Forca)
 	}
 }
+
+
+func BuscaHeroiPorNome(nomeHeroi string) (*Herois, error) {
+	db := ConectaDB()
+	defer db.Close() // Garantir que o banco de dados seja fechado após o uso
+
+	// Consulta para buscar um herói específico pelo nome do herói
+	query := `
+		SELECT 
+			h.nome, h.sexo, h.peso, h.altura, h.data_nasc, h.local_nasc, 
+			h.nome_heroi, h.popularidade, h.status, h.forca, p.poder
+		FROM 
+			Herois h
+		LEFT JOIN 
+			Poderes p ON h.id_heroi = p.id_heroi
+		WHERE 
+			h.nome_heroi = $1;
+	`
+
+	// Executa a consulta
+	var heroi Herois
+	err := db.QueryRow(query, nomeHeroi).Scan(
+		&heroi.Nome,
+		&heroi.Sexo,
+		&heroi.Peso,
+		&heroi.Altura,
+		&heroi.DataNasc,
+		&heroi.LocalNasc,
+		&heroi.NomeHeroi,
+		&heroi.Popularidade,
+		&heroi.Status,
+		&heroi.Forca,
+		&heroi.Poder,
+	)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return nil, fmt.Errorf("herói com nome %s não encontrado", nomeHeroi)
+		}
+		return nil, err
+	}
+
+	return &heroi, nil
+}
+
+
+
