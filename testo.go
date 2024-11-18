@@ -309,3 +309,16 @@ func CadastrarHeroiComPoderesNormalizados(heroi Herois, poderes []struct {
 	fmt.Println("Herói e poderes cadastrados com sucesso!")
 	return nil
 }
+
+func Remove(id int) error {
+	db := ConectaDB()
+	defer db.Close()
+
+	query := `DELETE FROM Herois WHERE id_heroi = $1`
+
+	_, err := db.Exec(query, id)
+	if err != nil {
+		return fmt.Errorf("erro ao remover herói com id %d: %w", id, err)
+	}
+	return nil
+}
