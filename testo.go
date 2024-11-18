@@ -34,7 +34,7 @@ type Herois struct {
 	NomeHeroi    string `json:"nome_heroi"`
 	Poder        string `json:"poder"`
 	Popularidade int    `json:"popularidade"`
-	Status       string `json:"status"`
+	Status       string `json:"status_atividade"`
 	Forca        int    `json:"forca"`
 }
 
@@ -91,7 +91,6 @@ func (h Herois) ExibeInfosGerais() {
 	}
 }
 
-
 func BuscaHeroiPorNome(nomeHeroi string) (*Herois, error) {
 	db := ConectaDB()
 	defer db.Close() // Garantir que o banco de dados seja fechado após o uso
@@ -133,6 +132,3 @@ func BuscaHeroiPorNome(nomeHeroi string) (*Herois, error) {
 
 	return &heroi, nil
 }
-
-
-
