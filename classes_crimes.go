@@ -171,3 +171,33 @@ func ConsultaCrimesPorSeveridade(severidadeMinima int, severidadeMaxima int) ([]
 
 	return crimes, nil
 }
+
+func ModificacaoHeroi(NomeHeroi string, NovoNomeHeroi string, NomeReal string, Sexo string, Altura float64, Local_nascimento string, Data_nascimento float64, Peso float64, Popularidade int, Forca int, Status string) error {
+	db := ConectaDB()
+	defer db.Close() // Garantir que o banco de dados seja fechado após o uso
+
+	query := `
+		UPDATE
+			Herois
+		WHERE
+			nome_heroi = $1
+		SET
+			nome_heroi = $2,
+			nome = $3,
+			sexo = $4,
+			altura = $5,
+			local_nasc = $6,
+			data_nasc = $7,
+			peso = $8,
+			popularidade = $9,
+			forca = $10,
+			status = $11;
+			`
+	rows, err := db.Query(query, NomeHeroi, NovoNomeHeroi, NomeReal, Sexo, Altura, Local_nascimento, Data_nascimento, Peso, Popularidade, Forca, Status)
+	if err != nil {
+		log.Fatal(err)
+		return err
+	}
+	defer rows.Close() // Garantir que o resultado seja fechado após o uso
+	return nil
+}
