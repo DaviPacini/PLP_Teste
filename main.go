@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"math/rand"
-	"time"
 )
 
 // Heroi representa um herói com nome e força
@@ -46,7 +45,6 @@ func (sb SimuladorBatalha) simularBatalha(heroi1, heroi2 Heroi) {
 }
 
 func main() {
-	rand.Seed(time.Now().UnixNano())
 
 	heroi1 := Heroi{nome: "Homelander", forca: 100}
 	heroi2 := Heroi{nome: "Homelander reverso", forca: 50}
