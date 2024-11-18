@@ -242,20 +242,31 @@ func BuscaHeroisPorStatus(status string) ([]Herois, error) {
 	return herois, nil
 }
 
-func CadastrarHeroi(heroi Herois) error {
+func CadastrarHeroiComPoderesNormalizados(heroi Herois, poderes []struct {
+	Poder     string
+	Descricao string
+}) error {
 	db := ConectaDB()
 	defer db.Close()
 
-	// Consulta SQL para inserir um novo herói
-	query := `
+	// Inicia uma transação para garantir consistência entre as tabelas
+	tx, err := db.Begin()
+	if err != nil {
+		return fmt.Errorf("erro ao iniciar transação: %w", err)
+	}
+
+	// Consulta para inserir o herói
+	queryHeroi := `
 		INSERT INTO Herois (
 			nome_heroi, nome_real, sexo, altura, peso, data_nasc, local_nasc, 
 			popularidade, forca, status_atividade
-		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10);
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+		RETURNING id_heroi;
 	`
 
-	// Executa a consulta com os dados do herói
-	_, err := db.Exec(query,
+	// Executa a consulta e captura o id do herói recém-inserido
+	var idHeroi int
+	err = tx.QueryRow(queryHeroi,
 		heroi.NomeHeroi,
 		heroi.Nome, // Nome real
 		heroi.Sexo,
@@ -266,12 +277,35 @@ func CadastrarHeroi(heroi Herois) error {
 		heroi.Popularidade,
 		heroi.Forca,
 		heroi.Status,
-	)
+	).Scan(&idHeroi)
 
 	if err != nil {
+		tx.Rollback() // Reverte a transação em caso de erro
 		return fmt.Errorf("erro ao cadastrar o herói: %w", err)
 	}
 
-	fmt.Println("Herói cadastrado com sucesso!")
+	// Consulta para inserir os poderes
+	queryPoder := `
+		INSERT INTO Poderes (
+			id_heroi, poder, descricao
+		) VALUES ($1, $2, $3);
+	`
+
+	// Itera sobre os poderes e os insere na tabela
+	for _, poder := range poderes {
+		_, err := tx.Exec(queryPoder, idHeroi, poder.Poder, poder.Descricao)
+		if err != nil {
+			tx.Rollback() // Reverte a transação em caso de erro
+			return fmt.Errorf("erro ao cadastrar poder '%s': %w", poder.Poder, err)
+		}
+	}
+
+	// Confirma a transação
+	err = tx.Commit()
+	if err != nil {
+		return fmt.Errorf("erro ao confirmar transação: %w", err)
+	}
+
+	fmt.Println("Herói e poderes cadastrados com sucesso!")
 	return nil
 }
