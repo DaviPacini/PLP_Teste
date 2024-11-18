@@ -108,7 +108,7 @@ func splitPoderes(poderes string) []string {
 	return strings.Split(poderes, ", ")
 }
 
-func BuscaHeroiPorNome(nomeHeroi string) (Herois, error) {
+func BuscaHeroiPorNome(nomeHeroi string) (*Herois, error) {
 	db := ConectaDB()
 	defer db.Close() // Garantir que o banco de dados seja fechado após o uso
 
@@ -155,7 +155,7 @@ func BuscaHeroiPorNome(nomeHeroi string) (Herois, error) {
 	// Divide a string de poderes em uma slice
 	heroi.Poderes = splitPoderes(poderes)
 
-	return heroi, nil
+	return &heroi, nil
 }
 
 func BuscaHeroisPorPopularidade(minPopularidade, maxPopularidade int) ([]Herois, error) {
