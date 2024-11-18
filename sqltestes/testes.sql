@@ -116,11 +116,20 @@ BEGIN
 
     -- Obter o resultado da missão
     SELECT resultado INTO resultado FROM Missoes WHERE id_missao = NEW.id_missao;
+    SELECT nivel_dificuldade FROM Missoes WHERE id_missao = NEW.id_missao;
 
     -- Se a missão for um sucesso
     IF resultado = 'Sucesso' THEN
-        SET aumento_forca = 0.10;          -- 10% de aumento na força
-        SET aumento_popularidade = 0.15;    -- 15% de aumento na popularidade
+        IF nivel_dificuldade BETWEEN 1 AND 4 THEN
+            SET aumento_forca = 0.05;
+            SET aumento_popularidade = 0.10;
+        ELSEIF nivel_dificuldade BETWEEN 5 AND 7 THEN
+            SET aumento_popularidade = 0.15;    -- 15% de aumento na popularidade
+            SET aumento_forca = 0.10;          -- 10% de aumento na força
+        ELSEIF nivel_dificuldade BETWEEN 8 AND 10 THEN
+            SET aumento_popularidade = 0.20;    -- 20% de aumento na popularidade
+            SET aumento_forca = 0.15;          -- 15% de aumento na força
+        END IF;
 
         -- Aumenta a força e a popularidade do herói
         UPDATE Herois
