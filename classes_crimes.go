@@ -179,8 +179,6 @@ func ModificacaoHeroi(NomeHeroi string, NovoNomeHeroi string, NomeReal string, S
 	query := `
 		UPDATE
 			Herois
-		WHERE
-			nome_heroi = $1
 		SET
 			nome_heroi = $2,
 			nome = $3,
@@ -192,6 +190,8 @@ func ModificacaoHeroi(NomeHeroi string, NovoNomeHeroi string, NomeReal string, S
 			popularidade = $9,
 			forca = $10,
 			status = $11;
+		WHERE
+			nome_heroi = $1
 			`
 	rows, err := db.Query(query, NomeHeroi, NovoNomeHeroi, NomeReal, Sexo, Altura, Local_nascimento, Data_nascimento, Peso, Popularidade, Forca, Status)
 	if err != nil {
