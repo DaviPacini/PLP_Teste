@@ -1,11 +1,11 @@
 CREATE TABLE Herois (
-    id_heroi INT NOT NULL PRIMARY KEY,
+    id_heroi SERIAL PRIMARY KEY,
     nome_heroi VARCHAR(50) NOT NULL,
     nome_real VARCHAR(50) NOT NULL,
     sexo VARCHAR(10) NOT NULL,
     altura FLOAT,
     local_nascimento VARCHAR(100) NOT NULL,
-    data_nascimento DATE NOT NULL,
+    data_nascimento DATE,
     peso FLOAT,
     popularidade INT NOT NULL CHECK (popularidade BETWEEN 0 AND 100),
     forca INT NOT NULL CHECK (forca BETWEEN 0 AND 100),
@@ -14,7 +14,7 @@ CREATE TABLE Herois (
 
 
 CREATE TABLE Poderes (
-    id_poder INT NOT NULL,
+    id_poder SERIAL NOT NULL,
     id_heroi INT NOT NULL,
     poder VARCHAR(50) NOT NULL,
     descricao VARCHAR(255),
@@ -23,7 +23,7 @@ CREATE TABLE Poderes (
 );
 
 CREATE TABLE Batalhas (
-    id_batalha INT NOT NULL PRIMARY KEY,
+    id_batalha SERIAL PRIMARY KEY,
     local VARCHAR(100) NOT NULL,
     data DATE NOT NULL,
     descricao VARCHAR(255),
@@ -39,7 +39,7 @@ CREATE TABLE Herois_Batalhas (
 );
 
 CREATE TABLE Missoes (
-    id_missao INT NOT NULL PRIMARY KEY,
+    id_missao SERIAL PRIMARY KEY,
     nome_missao VARCHAR(100) NOT NULL,
     descricao VARCHAR(255),
     nivel_dificuldade INT NOT NULL CHECK (nivel_dificuldade BETWEEN 1 AND 10),
@@ -57,14 +57,14 @@ CREATE TABLE Herois_Missoes (
 
 
 CREATE TABLE Crimes (
-    id_crime INT NOT NULL PRIMARY KEY,
+    id_crime SERIAL PRIMARY KEY,
     nome_crime VARCHAR(100) NOT NULL,
     severidade INT NOT NULL CHECK (severidade BETWEEN 1 AND 10)
 );
 
 --alteração: criação de id_ocorrecia como chave primaria.
 CREATE TABLE Herois_Crimes (
-    id_ocorrencia INT NOT NULL PRIMARY KEY,
+    id_ocorrencia SERIAL PRIMARY KEY,
     id_heroi INT NOT NULL,
     id_crime INT NOT NULL,
     data_crime DATE NOT NULL,
