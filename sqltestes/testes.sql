@@ -74,7 +74,7 @@ CREATE TABLE Herois_Crimes (
 );
 
 
-CREATE TRIGGER att_heroi_status AFTER UPTADE ON Herois FOR EACH ROW BEGIN 
+CREATE TRIGGER att_heroi_status AFTER UPDATE ON Herois FOR EACH ROW BEGIN 
     IF NEW.popularidade < 20 THEN SET NEW.status_atividade = 'Banido'; 
     END IF;
 END;
