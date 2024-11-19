@@ -46,16 +46,16 @@ func (h Herois) ExibeInfosGerais() []Herois {
 
 	query := `
 		SELECT 
-			h.nome, h.sexo, h.peso, h.altura, h.data_nasc, h.local_nasc, 
-			h.nome_heroi, h.popularidade, h.status, h.forca, 
+			h.nome_real, h.sexo, h.peso, h.altura, h.data_nascimento, h.local_nascimento, 
+			h.nome_heroi, h.popularidade, h.status_atividade, h.forca, 
 			STRING_AGG(p.poder, ', ') AS poderes
 		FROM 
 			Herois h
 		LEFT JOIN 
 			Poderes p ON h.id_heroi = p.id_heroi
 		GROUP BY 
-			h.id_heroi, h.nome, h.sexo, h.peso, h.altura, h.data_nasc, h.local_nasc, 
-			h.nome_heroi, h.popularidade, h.status, h.forca;
+			h.id_heroi, h.nome_real, h.sexo, h.peso, h.altura, h.data_nascimento, h.local_nascimento, 
+			h.nome_heroi, h.popularidade, h.status_atividade, h.forca;
 	`
 
 	allInfos, err := db.Query(query)
