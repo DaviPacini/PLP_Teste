@@ -10,4 +10,5 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	var herois Herois
 	allHeroes := herois.ExibeInfosGerais()
 	json.NewEncoder(w).Encode(allHeroes)
+
 }

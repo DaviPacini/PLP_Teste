@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"strings"
+	"time"
 
 	_ "github.com/lib/pq"
 )
@@ -21,12 +22,12 @@ func ConectaDB() *sql.DB {
 
 // Estrutura de informações pessoais
 type InfosPessoas struct {
-	Nome      string  `json:"nome_real"`
-	Sexo      string  `json:"sexo"`
-	Peso      float64 `json:"peso"`
-	Altura    float64 `json:"altura"`
-	DataNasc  string  `json:"data_nascimento"`
-	LocalNasc string  `json:"local_nascimento"`
+	Nome      string    `json:"nome_real"`
+	Sexo      string    `json:"sexo"`
+	Peso      float64   `json:"peso"`
+	Altura    float64   `json:"altura"`
+	DataNasc  time.Time `json:"data_nascimento"`
+	LocalNasc string    `json:"local_nascimento"`
 }
 
 // Estrutura dos Heróis
@@ -48,7 +49,7 @@ func (h Herois) ExibeInfosGerais() []Herois {
 		SELECT 
 			h.nome_real, h.sexo, h.peso, h.altura, h.data_nascimento, h.local_nascimento, 
 			h.nome_heroi, h.popularidade, h.status_atividade, h.forca, 
-			STRING_AGG(p.poder, ', ') AS poderes
+			COALESCE(STRING_AGG(p.poder, ', '), '') AS poderes
 		FROM 
 			Herois h
 		LEFT JOIN 
@@ -58,9 +59,10 @@ func (h Herois) ExibeInfosGerais() []Herois {
 			h.nome_heroi, h.popularidade, h.status_atividade, h.forca;
 	`
 
+	// Executa a consulta
 	allInfos, err := db.Query(query)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("Erro ao executar a consulta: %v", err)
 	}
 	defer allInfos.Close() // Garantir que o resultado seja fechado após o uso
 
@@ -70,13 +72,15 @@ func (h Herois) ExibeInfosGerais() []Herois {
 	// Itera sobre os resultados da consulta
 	for allInfos.Next() {
 		var heroi Herois
-		var poderes string
+		var poderes *string     // Use ponteiro para lidar com valores NULL
+		var dataNasc *time.Time // Use ponteiro para tratar data_nascimento como NULL
+
 		err := allInfos.Scan(
 			&heroi.Nome,
 			&heroi.Sexo,
 			&heroi.Peso,
 			&heroi.Altura,
-			&heroi.DataNasc,
+			&dataNasc, // Data de nascimento como ponteiro
 			&heroi.LocalNasc,
 			&heroi.NomeHeroi,
 			&heroi.Popularidade,
@@ -85,18 +89,32 @@ func (h Herois) ExibeInfosGerais() []Herois {
 			&poderes,
 		)
 		if err != nil {
-			log.Fatal(err)
+			log.Fatalf("Erro ao fazer o scan dos resultados: %v", err)
 		}
-		// Divide a string de poderes em uma slice
-		heroi.Poderes = splitPoderes(poderes)
+
+		// Verifica se a data de nascimento é NULL
+		if dataNasc != nil {
+			heroi.DataNasc = *dataNasc // Converte para o valor de time.Time
+		} else {
+			heroi.DataNasc = time.Time{} // Define um valor padrão, se necessário
+		}
+
+		// Verifica se poderes é NULL e ajusta para uma string vazia se necessário
+		if poderes != nil {
+			heroi.Poderes = splitPoderes(*poderes)
+		} else {
+			heroi.Poderes = []string{} // Nenhum poder registrado
+		}
+
+		// Adiciona o herói à lista
 		informacoes = append(informacoes, heroi)
 	}
 
-	// Exibe as informações dos heróis
-	// for _, heroi := range informacoes {
-	// 	fmt.Printf("Nome: %s, Nome do Herói: %s, Poderes: %v, Popularidade: %d, Força: %d\n",
-	// 		heroi.Nome, heroi.NomeHeroi, heroi.Poderes, heroi.Popularidade, heroi.Forca)
-	// }
+	// Verifica se ocorreu algum erro durante a iteração
+	if err = allInfos.Err(); err != nil {
+		log.Fatalf("Erro durante a iteração dos resultados: %v", err)
+	}
+
 	return informacoes
 }
 
