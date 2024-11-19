@@ -31,7 +31,7 @@ func ConsultaCrimesPorHeroiESeveridade(nomeHeroi string, severidadeMinima int, s
 	// Consulta para buscar crimes com base no nome do herói e na severidade
 	query := `
 		SELECT 
-			c.nome_crime, c.severidade, hc.data_crime, hc.descricao_evento
+			c.nome_crime, c.severidade, hc.data_crime, hc.descricao_evento, hc.esconder
 		FROM 
 			Crimes c
 		JOIN 
@@ -39,7 +39,9 @@ func ConsultaCrimesPorHeroiESeveridade(nomeHeroi string, severidadeMinima int, s
 		JOIN 
 			Herois h ON hc.id_heroi = h.id_heroi
 		WHERE 
-			h.nome_heroi = $1
+			h.nome_heroi = $1 
+		AND 
+			hc.esconder = false
 		AND 
 			c.severidade BETWEEN $2 AND $3;
 	`

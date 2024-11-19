@@ -69,6 +69,7 @@ CREATE TABLE Herois_Crimes (
     id_crime INT NOT NULL,
     data_crime DATE NOT NULL,
     descricao_evento VARCHAR(255),
+    esconder BOOLEAN NOT NULL DEFAULT FALSE,
     CONSTRAINT fk_heroi_crime_heroi FOREIGN KEY (id_heroi) REFERENCES Herois(id_heroi),
     CONSTRAINT fk_heroi_crime_crime FOREIGN KEY (id_crime) REFERENCES Crimes(id_crime)
 );
