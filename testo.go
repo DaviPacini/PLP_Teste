@@ -40,7 +40,7 @@ type Herois struct {
 }
 
 // Método para exibir as informações dos heróis
-func (h Herois) ExibeInfosGerais() {
+func (h Herois) ExibeInfosGerais() []Herois {
 	db := ConectaDB()
 	defer db.Close() // Garantir que o banco de dados seja fechado após o uso
 
@@ -94,10 +94,11 @@ func (h Herois) ExibeInfosGerais() {
 	}
 
 	// Exibe as informações dos heróis
-	for _, heroi := range informacoes {
-		fmt.Printf("Nome: %s, Nome do Herói: %s, Poderes: %v, Popularidade: %d, Força: %d\n",
-			heroi.Nome, heroi.NomeHeroi, heroi.Poderes, heroi.Popularidade, heroi.Forca)
-	}
+	// for _, heroi := range informacoes {
+	// 	fmt.Printf("Nome: %s, Nome do Herói: %s, Poderes: %v, Popularidade: %d, Força: %d\n",
+	// 		heroi.Nome, heroi.NomeHeroi, heroi.Poderes, heroi.Popularidade, heroi.Forca)
+	// }
+	return informacoes
 }
 
 // Função para dividir poderes em uma slice
