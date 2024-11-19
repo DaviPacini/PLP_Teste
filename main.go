@@ -46,9 +46,10 @@ func (sb SimuladorBatalha) simularBatalha(heroi1, heroi2 Heroi) {
 
 func main() {
 
-	heroi1 := Heroi{nome: "Homelander", forca: 100}
-	heroi2 := Heroi{nome: "Homelander reverso", forca: 50}
+	// heroi1 := Heroi{nome: "Homelander", forca: 100}
+	// heroi2 := Heroi{nome: "Homelander reverso", forca: 50}
 
-	simulador := SimuladorBatalha{}
-	simulador.simularBatalha(heroi1, heroi2)
+	// simulador := SimuladorBatalha{}
+	// simulador.simularBatalha(heroi1, heroi2)
+	Loading()
 }
