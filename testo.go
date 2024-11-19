@@ -25,8 +25,8 @@ type InfosPessoas struct {
 	Sexo      string  `json:"sexo"`
 	Peso      float64 `json:"peso"`
 	Altura    float64 `json:"altura"`
-	DataNasc  string  `json:"data_nasc"`
-	LocalNasc string  `json:"local_nasc"`
+	DataNasc  string  `json:"data_nascimento"`
+	LocalNasc string  `json:"local_nascimento"`
 }
 
 // Estrutura dos Heróis
