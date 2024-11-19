@@ -41,7 +41,7 @@ VALUES
 ('Agressão física', 6),
 ('Estupro', 10),
 ('Vandalismo', 5),
-('Extorsão', 8);
+('Extorsão', 8),
 ('Hackerismo', 7),
 ('Assédio sexual', 8),
 ('Terrorismo', 10),
