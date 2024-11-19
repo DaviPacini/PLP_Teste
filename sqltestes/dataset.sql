@@ -16,18 +16,20 @@ VALUES
 
 -- Inserir PODERES no banco de dados
 
-INSERT INTO Poderes (poder, descricao)
+INSERT INTO Poderes (id_heroi, poder, descricao)
 VALUES
-('Voo', 'Capacidade de voar em alta velocidade e grandes distâncias.'),
-('Superforça', 'Habilidade de exercer força física extraordinária, levantando grandes pesos e causando danos imensos.'),
-('Visão laser', 'Capacidade de emitir feixes de laser pelos olhos com grande precisão e poder de destruição.'),
-('Telecinese', 'Poder de mover objetos com a mente, sem necessidade de toque físico.'),
-('Regeneração acelerada', 'Capacidade de curar ferimentos rapidamente, até mesmo regenerar membros perdidos.'),
-('Supervelocidade', 'Habilidade de se mover a velocidades superiores à de um ser humano comum, com reflexos também muito rápidos.'),
-('Invisibilidade', 'Capacidade de se tornar invisível aos olhos de outros.'),
-('Controle de eletricidade', 'Poder de gerar e controlar eletricidade, podendo usá-la como uma arma ou para manipular dispositivos eletrônicos.'),
-('Força telepática', 'Habilidade de ler mentes e comunicar-se telepaticamente com outras pessoas.'),
-('Manipulação de realidade', 'Poder de alterar a realidade e os eventos que ocorrem ao redor do indivíduo, mudando as leis físicas e naturais.');
+(2, 'Voo', 'Capacidade de voar em alta velocidade e grandes distâncias.'),
+(2, 'Superforça', 'Habilidade de exercer força física extraordinária, levantando grandes pesos e causando danos imensos.'),
+(2, 'Visão laser', 'Capacidade de emitir feixes de laser pelos olhos com grande precisão e poder de destruição.'),
+(3, 'Superforça', 'Habilidade de exercer força física extraordinária, levantando grandes pesos e causando danos imensos.'),
+(3, 'Voo', 'Capacidade de voar em alta velocidade e grandes distâncias.'),
+(4, 'Superforça', 'Habilidade de exercer força física extraordinária, levantando grandes pesos e causando danos imensos.'),
+(5, 'Voo', 'Capacidade de voar em alta velocidade e grandes distâncias.'),
+(6, 'Superforça', 'Habilidade de exercer força física extraordinária, levantando grandes pesos e causando danos imensos.'),
+(7, 'Superforça', 'Habilidade de exercer força física extraordinária, levantando grandes pesos e causando danos imensos.'),
+(8, 'Superforça', 'Habilidade de exercer força física extraordinária, levantando grandes pesos e causando danos imensos.'),
+(9, 'Superforça', 'Habilidade de exercer força física extraordinária, levantando grandes pesos e causando danos imensos.'),
+(10, 'Superforça', 'Habilidade de exercer força física extraordinária, levantando grandes pesos e causando danos imensos.');
 
 -- Inserir CRIMES no banco de dados
 
