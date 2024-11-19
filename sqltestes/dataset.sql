@@ -1,3 +1,5 @@
+-- Inserir HEROIS no banco de dados
+
 INSERT INTO Herois (nome_heroi, nome_real, sexo, altura, local_nasc, data_nasc, peso)
 VALUES
 ('Homelander', 'John', 'Masculino', 1.91, 'Estados Unidos', '1982-06-10', 90.0),
@@ -11,6 +13,8 @@ VALUES
 ('Mothers Milk', 'Marvin T. Milk', 'Masculino', 1.80, 'Estados Unidos', '1983-01-15', 90.0),
 ('Frenchie', 'Serge', 'Masculino', 1.75, 'França', '1980-06-20', 75.0);
 
+-- Inserir PODERES no banco de dados
+
 INSERT INTO Poderes (poder, descricao)
 VALUES
 ('Voo', 'Capacidade de voar em alta velocidade e grandes distâncias.'),
@@ -23,6 +27,8 @@ VALUES
 ('Controle de eletricidade', 'Poder de gerar e controlar eletricidade, podendo usá-la como uma arma ou para manipular dispositivos eletrônicos.'),
 ('Força telepática', 'Habilidade de ler mentes e comunicar-se telepaticamente com outras pessoas.'),
 ('Manipulação de realidade', 'Poder de alterar a realidade e os eventos que ocorrem ao redor do indivíduo, mudando as leis físicas e naturais.');
+
+-- Inserir CRIMES no banco de dados
 
 INSERT INTO Crimes (nome_crime, severidade)
 VALUES

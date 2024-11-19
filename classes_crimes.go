@@ -78,6 +78,7 @@ func ConsultaCrimesPorHeroiESeveridade(nomeHeroi string, severidadeMinima int, s
 	return crimes, nil
 }
 
+// Função para Consultar os Crimes por Herói
 func ConsultaCrimesPorHeroi(nomeHeroi string) ([]Crimes, error) {
 	db := ConectaDB()
 	defer db.Close() // Garantir que o banco de dados seja fechado após o uso
@@ -130,6 +131,7 @@ func ConsultaCrimesPorHeroi(nomeHeroi string) ([]Crimes, error) {
 	return crimes, nil
 }
 
+// Função para Consultar os Crimes por Severidade
 func ConsultaCrimesPorSeveridade(severidadeMinima int, severidadeMaxima int) ([]Crimes, error) {
 	db := ConectaDB()
 	defer db.Close() // Garantir que o banco de dados seja fechado após o uso
@@ -180,6 +182,7 @@ func ConsultaCrimesPorSeveridade(severidadeMinima int, severidadeMaxima int) ([]
 	return crimes, nil
 }
 
+// Função para Modificar Informações do Herói
 func ModificacaoHeroi(NomeHeroi string, NovoNomeHeroi string, NomeReal string, Sexo string, Altura float64, Local_nascimento string, Data_nascimento float64, Peso float64, Popularidade int, Forca int, Status string) error {
 	db := ConectaDB()
 	defer db.Close() // Garantir que o banco de dados seja fechado após o uso
@@ -210,9 +213,11 @@ func ModificacaoHeroi(NomeHeroi string, NovoNomeHeroi string, NomeReal string, S
 	return nil
 }
 
+// Função para Consultar Missões por Herói
 func ConsultaMissoesPorHeroi(nomeHeroi string) ([]Missoes, error) {
 	db := ConectaDB()
-	defer db.Close()
+	defer db.Close() //Grarantir que o banco de dados seja fechado após o uso
+	//Query para buscar missões com base no nome do herói
 	query := `
 		SELECT
 			m.nome_missao, m.descricao, m.nivel_dificuldade, m.resultado, m.recompensa
@@ -226,13 +231,15 @@ func ConsultaMissoesPorHeroi(nomeHeroi string) ([]Missoes, error) {
 			h.nome_heroi = $1;
 		ORDER BY m.nivel_dificuldade ASC;
 	`
+	//Executa a consulta
 	rows, err := db.Query(query, nomeHeroi)
 	if err != nil {
 		log.Fatal(err)
 		return nil, err
 	}
-	defer rows.Close()
-	var missoes []Missoes
+	defer rows.Close()    //Garantir que o resultado seja fechado após o uso
+	var missoes []Missoes //Cria uma slice para armazenar as missões
+	//Itera sobre os resultados da consulta
 	for rows.Next() {
 		var missao Missoes
 		err := rows.Scan(
@@ -247,6 +254,7 @@ func ConsultaMissoesPorHeroi(nomeHeroi string) ([]Missoes, error) {
 		}
 		missoes = append(missoes, missao)
 	}
+	//Verifica se não encontrou nenhuma missão
 	if len(missoes) == 0 {
 		return nil, fmt.Errorf("nenhuma missão encontrada para o herói %s", nomeHeroi)
 	}
