@@ -4,8 +4,8 @@ CREATE TABLE Herois (
     nome_real VARCHAR(50) NOT NULL,
     sexo VARCHAR(10) NOT NULL,
     altura FLOAT,
-    local_nasc VARCHAR(100) NOT NULL,
-    data_nasc DATE NOT NULL,
+    local_nascimento VARCHAR(100) NOT NULL,
+    data_nascimento DATE NOT NULL,
     peso FLOAT,
     popularidade INT NOT NULL CHECK (popularidade BETWEEN 0 AND 100),
     forca INT NOT NULL CHECK (forca BETWEEN 0 AND 100),
@@ -73,63 +73,80 @@ CREATE TABLE Herois_Crimes (
     CONSTRAINT fk_heroi_crime_crime FOREIGN KEY (id_crime) REFERENCES Crimes(id_crime)
 );
 
-
-CREATE TRIGGER att_heroi_status AFTER UPDATE ON Herois FOR EACH ROW BEGIN 
-    IF NEW.popularidade < 20 THEN SET NEW.status_atividade = 'Banido'; 
-    END IF;
-END;
-
-
-CREATE TRIGGER att_popularidade_heroi
-AFTER INSERT ON Herois_Crimes
-FOR EACH ROW
+-- trigger para atualizar status heroi baseado na popularidade
+CREATE OR REPLACE FUNCTION att_heroi_status_func()
+RETURNS TRIGGER AS $$
 BEGIN
-    DECLARE severidade INT;
-    DECLARE reducao FLOAT;
+    IF NEW.popularidade < 20 THEN
+        NEW.status_atividade := 'Banido';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
 
+CREATE TRIGGER att_heroi_status
+BEFORE UPDATE ON Herois
+FOR EACH ROW
+EXECUTE FUNCTION att_heroi_status_func();
+
+
+
+
+
+
+
+-- trigger para atualizar popularidade do heroi baseado nos crimes cometidos
+CREATE OR REPLACE FUNCTION att_popularidade_heroi_func()
+RETURNS TRIGGER AS $$
+DECLARE
+    severidade INT;
+    reducao FLOAT;
+BEGIN
     -- Obter a severidade do crime registrado
     SELECT severidade INTO severidade FROM Crimes WHERE id_crime = NEW.id_crime;
 
     -- Determinar a redução na popularidade com base na severidade
     IF severidade BETWEEN 1 AND 4 THEN
-        SET reducao = 0.15;
-    ELSEIF severidade BETWEEN 5 AND 8 THEN
-        SET reducao = 0.20;
-    ELSEIF severidade BETWEEN 9 AND 10 THEN
-        SET reducao = 0.50;
+        reducao := 0.15;
+    ELSIF severidade BETWEEN 5 AND 8 THEN
+        reducao := 0.20;
+    ELSIF severidade BETWEEN 9 AND 10 THEN
+        reducao := 0.50;
     END IF;
 
     -- Atualizar a popularidade do herói aplicando a redução calculada
     UPDATE Herois
     SET popularidade = GREATEST(0, popularidade * (1 - reducao))
     WHERE id_heroi = NEW.id_heroi;
+
+    RETURN NULL;
 END;
+$$ LANGUAGE plpgsql;
 
-
-CREATE TRIGGER ajustar_atributos_missao
-AFTER INSERT ON Herois_Missoes
+CREATE TRIGGER att_popularidade_heroi
+AFTER INSERT ON Herois_Crimes
 FOR EACH ROW
-BEGIN
-    DECLARE resultado VARCHAR(20);
-    DECLARE aumento_forca FLOAT;
-    DECLARE aumento_popularidade FLOAT;
+EXECUTE FUNCTION att_popularidade_heroi_func();
 
+
+
+
+
+-- trigger para ajustar atributos apos missao
+CREATE OR REPLACE FUNCTION ajustar_atributos_missao_func()
+RETURNS TRIGGER AS $$
+DECLARE
+    resultado VARCHAR(20);
+    aumento_forca FLOAT;
+    aumento_popularidade FLOAT;
+BEGIN
     -- Obter o resultado da missão
     SELECT resultado INTO resultado FROM Missoes WHERE id_missao = NEW.id_missao;
-    SELECT nivel_dificuldade FROM Missoes WHERE id_missao = NEW.id_missao;
 
     -- Se a missão for um sucesso
     IF resultado = 'Sucesso' THEN
-        IF nivel_dificuldade BETWEEN 1 AND 4 THEN
-            SET aumento_forca = 0.05;
-            SET aumento_popularidade = 0.10;
-        ELSEIF nivel_dificuldade BETWEEN 5 AND 7 THEN
-            SET aumento_popularidade = 0.15;    -- 15% de aumento na popularidade
-            SET aumento_forca = 0.10;          -- 10% de aumento na força
-        ELSEIF nivel_dificuldade BETWEEN 8 AND 10 THEN
-            SET aumento_popularidade = 0.20;    -- 20% de aumento na popularidade
-            SET aumento_forca = 0.15;          -- 15% de aumento na força
-        END IF;
+        aumento_forca := 0.10;          -- 10% de aumento na força
+        aumento_popularidade := 0.15;   -- 15% de aumento na popularidade
 
         -- Aumenta a força e a popularidade do herói
         UPDATE Herois
@@ -139,8 +156,8 @@ BEGIN
         WHERE id_heroi = NEW.id_heroi;
 
     -- Se a missão for um fracasso
-    ELSEIF resultado = 'Fracasso' THEN
-        SET aumento_popularidade = 0.10;    -- 10% de redução na popularidade
+    ELSIF resultado = 'Fracasso' THEN
+        aumento_popularidade := 0.10;    -- 10% de redução na popularidade
 
         -- Reduz a popularidade do herói
         UPDATE Herois
@@ -148,4 +165,15 @@ BEGIN
             popularidade = GREATEST(0, popularidade * (1 - aumento_popularidade)) -- Limite mínimo de 0
         WHERE id_heroi = NEW.id_heroi;
     END IF;
+
+    RETURN NULL;
 END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER ajustar_atributos_missao
+AFTER INSERT ON Herois_Missoes
+FOR EACH ROW
+EXECUTE FUNCTION ajustar_atributos_missao_func();
+
+
+
