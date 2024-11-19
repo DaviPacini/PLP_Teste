@@ -44,7 +44,6 @@ func (h Herois) ExibeInfosGerais() []Herois {
 	db := ConectaDB()
 	defer db.Close() // Garantir que o banco de dados seja fechado após o uso
 
-	// Executa a consulta com STRING_AGG para agrupar poderes
 	query := `
 		SELECT 
 			h.nome, h.sexo, h.peso, h.altura, h.data_nasc, h.local_nasc, 
