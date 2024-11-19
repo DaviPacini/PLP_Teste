@@ -15,6 +15,14 @@ type Crimes struct {
 	DescricaoEvento string `json:"descricao_evento"`
 }
 
+type Missoes struct {
+	NomeMissao      string `json:"nome_missao"`
+	DescricaoMissao string `json:"descricao"`
+	NivelMissao     string `json:"nivel_dificuldade"`
+	Resultado       string `json:"resultado"`
+	Recompensa      string `json:"recompensa"`
+}
+
 // Método para consultar crimes por herói e por severidade
 func ConsultaCrimesPorHeroiESeveridade(nomeHeroi string, severidadeMinima int, severidadeMaxima int) ([]Crimes, error) {
 	db := ConectaDB()
@@ -200,4 +208,47 @@ func ModificacaoHeroi(NomeHeroi string, NovoNomeHeroi string, NomeReal string, S
 	}
 	defer rows.Close() // Garantir que o resultado seja fechado após o uso
 	return nil
+}
+
+func ConsultaMissoesPorHeroi(nomeHeroi string) ([]Missoes, error) {
+	db := ConectaDB()
+	defer db.Close()
+	query := `
+		SELECT
+			m.nome_missao, m.descricao, m.nivel_dificuldade, m.resultado, m.recompensa
+		FROM
+			Missoes m
+		JOIN
+			Herois_Missoes hm ON m.id_missao = hm.id_missao
+		JOIN
+			Herois h ON hm.id_heroi = h.id_heroi
+		WHERE
+			h.nome_heroi = $1;
+		ORDER BY m.nivel_dificuldade ASC;
+	`
+	rows, err := db.Query(query, nomeHeroi)
+	if err != nil {
+		log.Fatal(err)
+		return nil, err
+	}
+	defer rows.Close()
+	var missoes []Missoes
+	for rows.Next() {
+		var missao Missoes
+		err := rows.Scan(
+			&missao.NomeMissao,
+			&missao.DescricaoMissao,
+			&missao.NivelMissao,
+			&missao.Resultado,
+			&missao.Recompensa,
+		)
+		if err != nil {
+			log.Fatal(err)
+		}
+		missoes = append(missoes, missao)
+	}
+	if len(missoes) == 0 {
+		return nil, fmt.Errorf("nenhuma missão encontrada para o herói %s", nomeHeroi)
+	}
+	return missoes, nil
 }
