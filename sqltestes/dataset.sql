@@ -1,17 +1,18 @@
 -- Inserir HEROIS no banco de dados
 
-INSERT INTO Herois (nome_heroi, nome_real, sexo, altura, local_nasc, data_nasc, peso)
+INSERT INTO Herois (nome_heroi, nome_real, sexo, altura, local_nasc, data_nasc, peso, popularidade, forca, status_atividade)
 VALUES
-('Homelander', 'John', 'Masculino', 1.91, 'Estados Unidos', '1982-06-10', 90.0),
-('Starlight', 'Annie January', 'Feminino', 1.65, 'Estados Unidos', '1991-05-01', 55.0),
-('Queen Maeve', 'Maeve', 'Feminino', 1.75, 'Estados Unidos', '1980-04-15', 70.0),
-('A-Train', 'Reggie Franklin', 'Masculino', 1.77, 'Estados Unidos', '1986-03-01', 80.0),
-('The Deep', 'Kevin Moskowitz', 'Masculino', 1.80, 'Estados Unidos', '1986-07-25', 85.0),
-('Black Noir', 'Desconhecido', 'Masculino', 1.88, 'Desconhecido', 'Desconhecido', 100.0),
-('The Soldier Boy', 'Ben', 'Masculino', 1.85, 'Estados Unidos', '1940-12-01', 95.0),
-('Kimiko', 'Kimiko', 'Feminino', 1.65, 'Japão', '1985-08-10', 50.0),
-('Mothers Milk', 'Marvin T. Milk', 'Masculino', 1.80, 'Estados Unidos', '1983-01-15', 90.0),
-('Frenchie', 'Serge', 'Masculino', 1.75, 'França', '1980-06-20', 75.0);
+('Homelander', 'John', 'Masculino', 1.91, 'Estados Unidos', '1982-06-10', 90.0, 95, 100, 'Ativo'),
+('Starlight', 'Annie January', 'Feminino', 1.65, 'Estados Unidos', '1991-05-01', 55.0, 85, 75, 'Ativo'),
+('Queen Maeve', 'Maeve', 'Feminino', 1.75, 'Estados Unidos', '1980-04-15', 70.0, 90, 90, 'Inativo'),
+('A-Train', 'Reggie Franklin', 'Masculino', 1.77, 'Estados Unidos', '1986-03-01', 80.0, 70, 65, 'Banido'),
+('The Deep', 'Kevin Moskowitz', 'Masculino', 1.80, 'Estados Unidos', '1986-07-25', 85.0, 60, 55, 'Ativo'),
+('Black Noir', 'Desconhecido', 'Masculino', 1.88, 'Desconhecido', NULL, 100.0, 80, 95, 'Inativo'),
+('The Soldier Boy', 'Ben', 'Masculino', 1.85, 'Estados Unidos', '1940-12-01', 95.0, 75, 90, 'Banido'),
+('Kimiko', 'Kimiko', 'Feminino', 1.65, 'Japão', '1985-08-10', 50.0, 50, 85, 'Ativo'),
+('Mothers Milk', 'Marvin T. Milk', 'Masculino', 1.80, 'Estados Unidos', '1983-01-15', 90.0, 65, 70, 'Ativo'),
+('Frenchie', 'Serge', 'Masculino', 1.75, 'França', '1980-06-20', 75.0, 60, 60, 'Ativo');
+
 
 -- Inserir PODERES no banco de dados
 
