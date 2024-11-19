@@ -96,7 +96,9 @@ func ConsultaCrimesPorHeroi(nomeHeroi string) ([]Crimes, error) {
 		JOIN 
 			Herois h ON hc.id_heroi = h.id_heroi
 		WHERE 
-			h.nome_heroi = $1;
+			h.nome_heroi = $1
+		AND 
+			hc.esconder = false;
 	`
 
 	// Executa a consulta
@@ -147,7 +149,9 @@ func ConsultaCrimesPorSeveridade(severidadeMinima int, severidadeMaxima int) ([]
 		JOIN 
 			Herois_Crimes hc ON c.id_crime = hc.id_crime
 		WHERE 
-			c.severidade BETWEEN $1 AND $2;
+			c.severidade BETWEEN $1 AND $2
+		AND 
+			hc.esconder = false;
 	`
 
 	// Executa a consulta
