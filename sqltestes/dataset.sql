@@ -81,3 +81,52 @@ VALUES
 ('Resgate Rápido', 'Retirar civis de uma área de risco antes da chegada de um super', 2),
 ('Alerta Comunitário', 'Informar moradores sobre a presença de um super perigoso', 1),
 ('Teste de Equipamento', 'Avaliar novos dispositivos contra supers', 3);
+
+/*
+INSERT INTO Heroi_Crime (id_heroi, id_crime, data_crime, descricao_evento, esconder)
+VALUES
+-- Homelander
+(1, 10, '2023-05-12', 'Ataque terrorista em um prédio civil', TRUE),
+(1, 7, '2022-08-03', 'Desvio de verba da Vought', TRUE),
+(1, 6, '2023-01-15', 'Sequestro de filho de Becca Butcher', TRUE),
+(1, 9, '2022-07-22', 'Envolvimento com o tráfico de drogas', TRUE),
+(1, 8, '2023-04-18', 'Agressão sexual contra uma funcionária da Vought', TRUE),
+
+-- Starlight
+(2, 7, '2023-03-10', 'Exposição de informações sigilosas da Vought', FALSE),
+(2, 5, '2022-11-20', 'Destruição de propriedade durante uma luta', FALSE),
+
+-- Queen Maeve
+(3, 10, '2020-06-01', 'Participação na queda de um avião', TRUE),
+(3, 6, '2021-12-10', 'Sequestro de civis para controle da narrativa da Vought', TRUE),
+(3, 9, '2021-03-15', 'Agressão física a criminosos em um bar', FALSE),
+
+-- A-Train
+(4, 7, '2023-06-30', 'Uso de Composto V para doping', TRUE),
+(4, 9, '2022-01-05', 'Tráfico de drogas envolvendo Composto V', TRUE),
+(4, 6, '2023-02-14', 'Agressão a civis após discussão', FALSE),
+
+-- The Deep
+(5, 8, '2021-07-12', 'Assédio sexual a funcionária', TRUE),
+(5, 10, '2022-03-25', 'Colaboração com atividades terroristas contra ecossistemas', TRUE),
+(5, 5, '2022-10-09', 'Vandalismo em protesto ambiental', FALSE),
+
+-- Black Noir
+(6, 10, '2019-04-10', 'Atentado terrorista a mando da Vought', TRUE),
+(6, 6, '2020-02-20', 'Sequestro de cientista para experimentos', TRUE),
+
+-- The Soldier Boy
+(7, 10, '1984-09-14', 'Atrocidades em missões militares secretas', TRUE),
+(7, 7, '1986-11-01', 'Fraude em manipulação de propaganda de guerra', TRUE),
+
+-- Kimiko
+(8, 5, '2023-08-15', 'Dano a propriedades durante combate', FALSE),
+(8, 9, '2022-04-10', 'Envolvimento com tráfico para sobreviver', FALSE),
+
+-- Mothers Milk
+(9, 9, '2023-02-28', 'Agressão a membros da Vought durante investigação', FALSE),
+
+-- Frenchie
+(10, 9, '2022-12-12', 'Produção e uso de drogas ilegais', TRUE),
+(10, 6, '2021-05-05', 'Sequestro de criminoso para obter informações', FALSE);
+*/
