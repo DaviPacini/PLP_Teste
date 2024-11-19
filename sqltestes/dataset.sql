@@ -51,10 +51,33 @@ VALUES
 ('Espionagem', 8),
 ('Concussão', 5),
 ('Fraude fiscal', 7),
-('Roubos à mão armada', 9);
-('Urinar em local público', 3);
-('Pedofilia', 8);
-('11-09', 10);
-('Homofobia', 1);
-('Racismo', 7);
+('Roubos à mão armada', 9),
+('Urinar em local público', 3),
+('Pedofilia', 8),
+('11-09', 10),
+('Homofobia', 1),
+('Racismo', 7),
 ('Trafico de animais', 5);
+
+INSERT INTO Missoes (nome_missao, descricao, nivel_dificuldade)
+VALUES
+('Caçada ao Supers', 'Investigar e capturar um super que age fora da lei', 7),
+('Missão no Submundo', 'Infiltrar uma rede criminosa ligada a supers', 8),
+('Sabotagem Corporativa', 'Descobrir e expor segredos da Vought', 6),
+('Resgate em Perigo', 'Salvar civis de um ataque descontrolado', 5),
+('Operação Nocturna', 'Vigiar um super suspeito durante a noite', 3),
+('Confronto Público', 'Confrontar um super em um evento televisivo', 9),
+('Negociações Perigosas', 'Medir forças diplomáticas com a Vought', 7),
+('Neutralizar Supers', 'Desarmar um super sem causar mortes', 8),
+('Proteger Testemunha', 'Escoltar um ex-super disposto a testemunhar', 4),
+('Hackeamento Crítico', 'Roubar informações sigilosas da Vought', 6),
+('Reconhecimento Urbano', 'Mapear atividades suspeitas de supers na cidade', 2),
+('Monitoramento Secreto', 'Acompanhar um super sem ser notado', 3),
+('Entrega Segura', 'Transportar um pacote crítico sem chamar atenção', 4),
+('Contato Inicial', 'Estabelecer comunicação com uma possível testemunha', 1),
+('Investigação Local', 'Coletar evidências em uma cena suspeita', 3),
+('Operação Silenciosa', 'Entrar e sair de um prédio sem ser detectado', 5),
+('Reunião Clandestina', 'Participar de um encontro secreto sem atrair suspeitas', 4),
+('Resgate Rápido', 'Retirar civis de uma área de risco antes da chegada de um super', 2),
+('Alerta Comunitário', 'Informar moradores sobre a presença de um super perigoso', 1),
+('Teste de Equipamento', 'Avaliar novos dispositivos contra supers', 3);
